@@ -8,16 +8,15 @@ let desctabsListData = Mock.mock({
   'data|4-8': [
     {
       id: '@id',
-      title: '@ctitle',
+      title: '@title',
       namespace: 'desctab',
-      content: '@cparagraph',
+      content: '@paragraph',
       isPublish: '@boolean',
       createTime: '@datetime',
-      imageNum: '@integer(1,100)',
       'fileList|1-10': [{
-        uid: '-@integer(1,100)',
-        name: '@integer(1,100)',
-        url: 'http://7xriwb.com1.z0.glb.clouddn.com/@integer(1,100)',
+        name: '@integer(1,960)',
+        uid: '-@name',
+        url: 'http://7xriwb.com1.z0.glb.clouddn.com/@name',
         status: 'done',
       }],
     },

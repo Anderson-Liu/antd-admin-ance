@@ -38,6 +38,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
+      width: 140,
       render: (text, record) => <Link to={`${record.namespace}/${record.id}`}>{text}</Link>,
     }, {
       title: 'Content',
@@ -47,6 +48,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: 'isPublish',
       dataIndex: 'isPublish',
       key: 'isPublish',
+      width: 84,
       render: text => (<span>{text
         ? '是'
         : '否'}</span>),
@@ -54,6 +56,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: 'CreateTime',
       dataIndex: 'createTime',
       key: 'createTime',
+      width: 90,
     }, {
       title: 'Operation',
       key: 'operation',
