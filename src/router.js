@@ -71,7 +71,7 @@ const Routers = function ({ history, app }) {
       component: () => import('./routes/DescTabs/'),
     }, {
       path: '/test',
-      models: () => [import('./models/ppt')],
+      models: () => [import('./models/desctab')],
       component: () => import('./routes/test/'),
     },
   ]
