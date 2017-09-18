@@ -154,6 +154,24 @@ let database = [
     name: 'Test Navigation22',
     route: '/navigation/navigation2/navigation2',
   },
+  {
+    id: '8',
+    icon: 'laptop',
+    name: 'PPT',
+    route: '/ppt',
+  },
+  {
+    id: '9',
+    icon: 'laptop',
+    name: 'DescTabs',
+    route: '/descTabs',
+  },
+  {
+    id: '10',
+    icon: 'laptop',
+    name: 'test',
+    route: '/test',
+  },
 ]
 
 module.exports = {
