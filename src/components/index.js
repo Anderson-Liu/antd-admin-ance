@@ -7,6 +7,7 @@ import FilterItem from './FilterItem'
 import Loader from './Loader'
 import PicturesWall from './PicturesWall'
 import EditableTable from './EditableTable'
+import FormTemplate from './FormTemplate'
 import * as Layout from './Layout/index.js'
 import Page from './Page'
 
@@ -26,4 +27,5 @@ export {
   Page,
   PicturesWall,
   EditableTable,
+  FormTemplate,
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Row, Col, Button, Popconfirm } from 'antd'
-import { Page } from 'components'
+import { Row, Col, Button, Popconfirm, Card } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
@@ -9,7 +8,7 @@ import Modal from './Modal'
 
 const FormTemplate = ({ filterProps, selectedRowKeys, listProps, modalVisible, modalProps, handleDeleteItems }) => {
   return (
-    <Page inner>
+    <Card>
       <Filter {...filterProps} />
       {
         selectedRowKeys.length > 0 &&
@@ -24,7 +23,7 @@ const FormTemplate = ({ filterProps, selectedRowKeys, listProps, modalVisible, m
       }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
-    </Page>
+    </Card>
   )
 }
 

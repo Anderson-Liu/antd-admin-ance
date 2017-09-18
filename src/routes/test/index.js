@@ -3,7 +3,7 @@ import { connect } from 'dva'
 import { routerRedux } from 'dva/router'
 import queryString from 'query-string'
 import PropTypes from 'prop-types'
-import FormTemplate from '../formTemplate'
+import { FormTemplate } from 'components'
 
 const Test = ({ location, dispatch, ppt, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, previewVisible, previewImage } = ppt
