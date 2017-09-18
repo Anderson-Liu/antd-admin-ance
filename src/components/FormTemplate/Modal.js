@@ -34,6 +34,7 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
+      data.fileList = data.fileList instanceof Array ? data.fileList : data.fileList.fileList
       onOk(data)
     })
   }
