@@ -24,7 +24,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/test') {
+        if (location.pathname === '/ppt') {
           const payload = location.query || { current: 1, pageSize: 10 }
           dispatch({
             type: 'query',
