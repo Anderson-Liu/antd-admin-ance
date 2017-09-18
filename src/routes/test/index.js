@@ -3,7 +3,7 @@ import { connect } from 'dva'
 import { routerRedux } from 'dva/router'
 import queryString from 'query-string'
 import PropTypes from 'prop-types'
-import { FormTemplate } from 'components'
+import { FormTemplate, EditableTable } from 'components'
 
 const Test = ({ location, dispatch, desctab, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, previewVisible, previewImage } = desctab
@@ -150,7 +150,7 @@ const Test = ({ location, dispatch, desctab, loading }) => {
     handleDeleteItems,
   }
 
-  return <FormTemplate {...allProps} />
+  return <div><EditableTable /> <FormTemplate {...allProps} /></div>
 }
 
 Test.propTypes = {

@@ -75,7 +75,7 @@ class EditableTable extends React.Component {
             {
               editable ?
                 <span>
-                  <a onClick={() => this.editDone(index, 'save')}>Save</a>
+                  <a onClick={() => this.editDone(index, 'save')}>Save&emsp;&emsp;</a>
                   <Popconfirm title="Sure to cancel?" onConfirm={() => this.editDone(index, 'cancel')}>
                     <a>Cancel</a>
                   </Popconfirm>
@@ -155,7 +155,7 @@ class EditableTable extends React.Component {
       return obj
     })
     const columns = this.columns
-    return (<Card title="标题" style={{ width: '100%' }} >
+    return (<Card>
       <Table bordered dataSource={dataSource} columns={columns} pagination={false} />
     </Card>)
   }
