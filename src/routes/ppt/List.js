@@ -29,11 +29,11 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   const columns = [
     {
       title: 'Image',
-      dataIndex: 'image',
-      key: 'image',
+      dataIndex: 'fileList',
+      key: 'fileList',
       width: 64,
       className: styles.avatar,
-      render: text => <img alt={'avatar'} width={24} src={text} />,
+      render: text => <img alt={'avatar'} width={24} src={text[0].url} />,
     }, {
       title: 'Title',
       dataIndex: 'title',
@@ -77,7 +77,6 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         {...tableProps}
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
         bordered
-        scroll={{ x: 1250 }}
         columns={columns}
         simple
         rowKey={record => record.id}

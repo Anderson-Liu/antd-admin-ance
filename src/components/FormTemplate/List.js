@@ -38,7 +38,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
-      render: (text, record) => <Link to={`ppt/${record.id}`}>{text}</Link>,
+      render: (text, record) => <Link to={`${record.namespace}/${record.id}`}>{text}</Link>,
     }, {
       title: 'Content',
       dataIndex: 'content',

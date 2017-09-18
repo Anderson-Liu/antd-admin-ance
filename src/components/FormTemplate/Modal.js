@@ -34,13 +34,6 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-      const newItem =
-        {
-          uploadImage: {
-            fileList: data.uploadImage,
-          },
-        }
-      data = data.uploadImage instanceof Array ? { ...data, ...newItem } : data
       onOk(data)
     })
   }

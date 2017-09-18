@@ -8,12 +8,18 @@ let pptsListData = Mock.mock({
   'data|4-8': [
     {
       id: '@id',
+      namespace: 'ppt',
       title: '@ctitle',
       content: '@cparagraph',
       isPublish: '@boolean',
       createTime: '@datetime',
-      pptImage:
-        '@image(\'100x100\', Mock.Random.color(), \'#757575\', \'png\', this.nickName.substr(0, 1))',
+      imageNum: '@integer(1,100)',
+      'fileList|1-10': [{
+        uid: '-@integer(1,100)',
+        name: '@integer(1,100)',
+        url: 'http://7xriwb.com1.z0.glb.clouddn.com/@integer(1,100)',
+        status: 'done',
+      }],
     },
   ],
 })

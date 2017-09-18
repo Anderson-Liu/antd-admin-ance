@@ -9,6 +9,7 @@ let desctabsListData = Mock.mock({
     {
       id: '@id',
       title: '@ctitle',
+      namespace: 'desctab',
       content: '@cparagraph',
       isPublish: '@boolean',
       createTime: '@datetime',
@@ -25,44 +26,6 @@ let desctabsListData = Mock.mock({
 
 
 let database = desctabsListData.data
-
-const EnumRoleType = {
-  ADMIN: 'admin',
-  DEFAULT: 'guest',
-  DEVELOPER: 'developer',
-}
-
-const userPermission = {
-  DEFAULT: {
-    visit: ['1', '2', '21', '7', '5', '51', '52', '53'],
-    role: EnumRoleType.DEFAULT,
-  },
-  ADMIN: {
-    role: EnumRoleType.ADMIN,
-  },
-  DEVELOPER: {
-    role: EnumRoleType.DEVELOPER,
-  },
-}
-
-const adminUsers = [
-  {
-    id: 0,
-    username: 'admin',
-    password: 'admin',
-    permissions: userPermission.ADMIN,
-  }, {
-    id: 1,
-    username: 'guest',
-    password: 'guest',
-    permissions: userPermission.DEFAULT,
-  }, {
-    id: 2,
-    username: '吴彦祖',
-    password: '123456',
-    permissions: userPermission.DEVELOPER,
-  },
-]
 
 const queryArray = (array, key, keyAlias = 'key') => {
   if (!(array instanceof Array)) {
@@ -89,30 +52,6 @@ const NOTFOUND = {
 }
 
 module.exports = {
-
-  [`GET ${apiPrefix}/desctab`] (req, res) {
-    const cookie = req.headers.cookie || ''
-    const cookies = qs.parse(cookie.replace(/\s/g, ''), { delimiter: ';' })
-    const response = {}
-    const desctab = {}
-    if (!cookies.token) {
-      res.status(200).send({ message: 'Not Login' })
-      return
-    }
-    const token = JSON.parse(cookies.token)
-    if (token) {
-      response.success = token.deadline > new Date().getTime()
-    }
-    if (response.success) {
-      const desctabItem = adminUsers.filter(_ => _.id === token.id)
-      if (desctabItem.length > 0) {
-        // todo: 通过desctab.data访问desctab数据
-        desctab.data = desctabItem
-      }
-    }
-    response.user = desctab
-    res.json(response)
-  },
 
   [`GET ${apiPrefix}/desctabs`] (req, res) {
     const { query } = req

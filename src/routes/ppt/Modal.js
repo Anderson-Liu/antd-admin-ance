@@ -25,7 +25,7 @@ const modal = ({
   ...modalProps
 }) => {
   const handleOk = () => {
-    // todo: 在这里添加fileList到pptImage中
+    // todo: 在这里添加fileList到fileList中
     validateFields((errors) => {
       if (errors) {
         return
@@ -34,13 +34,6 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-      const newItem =
-        {
-          pptImage: {
-            fileList: data.pptImage,
-          },
-        }
-      data = data.pptImage instanceof Array ? { ...data, ...newItem } : data
       onOk(data)
     })
   }
@@ -82,8 +75,8 @@ const modal = ({
           )}
         </FormItem>
         <FormItem label="Image" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('pptImage', {
-            initialValue: item.pptImage,
+          {getFieldDecorator('fileList', {
+            initialValue: { fileList: item.fileList },
             rules: [
               {
                 required: true,
