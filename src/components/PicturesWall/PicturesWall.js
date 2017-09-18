@@ -56,7 +56,7 @@ class PicturesWall extends React.Component {
 
   handlePreview = (file) => {
     this.setState({
-      previewImage: file.response.url || file.thumbUrl,
+      previewImage: file.url || file.response.url,
       previewVisible: true,
     })
   }
