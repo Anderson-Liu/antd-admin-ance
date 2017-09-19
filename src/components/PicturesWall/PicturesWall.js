@@ -22,7 +22,7 @@ class PicturesWall extends React.Component {
     fileList = fileList.map((file) => {
       if (file.response) {
         // Component will show file.url as link
-        file.url = `http://ot0m9zw62.bkt.clouddn.com/${file.response.key}.png`
+        file.url = `http://ot0m9zw62.bkt.clouddn.com/${file.response.key}`
       }
       return file
     })
