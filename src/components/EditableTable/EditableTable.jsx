@@ -1,5 +1,6 @@
 import React from 'react'
 import { Table, Input, Popconfirm, Card } from 'antd'
+import PropTypes from 'prop-types'
 
 class EditableCell extends React.Component {
   state = {
@@ -56,26 +57,26 @@ class EditableTable extends React.Component {
   constructor (props) {
     super(props)
     this.columns = [{
-      title: '标题',
-      dataIndex: 'name',
+      title: 'title',
+      dataIndex: 'title',
       width: '25%',
-      render: (text, record, index) => this.renderColumns(this.state.data, index, 'name', text),
+      render: (text, record, index) => this.renderColumns(this.state.data, index, 'title', text),
     }, {
-      title: '副标题',
-      dataIndex: 'age',
+      title: 'subtitle',
+      dataIndex: 'subtitle',
       width: '15%',
-      render: (text, record, index) => this.renderColumns(this.state.data, index, 'age', text),
+      render: (text, record, index) => this.renderColumns(this.state.data, index, 'subtitle', text),
     }, {
       title: 'operation',
       dataIndex: 'operation',
       render: (text, record, index) => {
-        const { editable } = this.state.data[index].name
+        const { editable } = this.state.data[index].title
         return (
           <div className="editable-row-operations">
             {
               editable ?
                 <span>
-                  <a onClick={() => this.editDone(index, 'save')}>Save&emsp;&emsp;</a>
+                  <a onClick={() => this.editDone(index, 'save')}>Save</a>
                   <Popconfirm title="Sure to cancel?" onConfirm={() => this.editDone(index, 'cancel')}>
                     <a>Cancel</a>
                   </Popconfirm>
@@ -92,13 +93,13 @@ class EditableTable extends React.Component {
     this.state = {
       data: [{
         key: '0',
-        name: {
+        title: {
           editable: false,
-          value: '标题',
+          value: 'Edward King 0',
         },
-        age: {
+        subtitle: {
           editable: false,
-          value: '副标题',
+          value: '32',
         },
       }],
     }
@@ -155,11 +156,13 @@ class EditableTable extends React.Component {
       return obj
     })
     const columns = this.columns
-    return (<Card>
-      <Table bordered dataSource={dataSource} columns={columns} pagination={false} />
-    </Card>)
+    return <Card><Table bordered dataSource={dataSource} columns={columns} pagination={false} /></Card>
   }
 }
-
-
+EditableCell.propTypes = {
+  value: PropTypes.string,
+  status: PropTypes.string,
+  editable: PropTypes.bool,
+  onChange: PropTypes.func,
+}
 export default EditableTable
