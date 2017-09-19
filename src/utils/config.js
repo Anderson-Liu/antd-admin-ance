@@ -24,6 +24,8 @@ module.exports = {
     posts: `${APIV1}/posts`,
     desctab: `${APIV1}/desctab/:id`,
     desctabs: `${APIV1}/desctabs`,
+    tabtitle: `${APIV1}/tabtitle/:id`,
+    tabtitles: `${APIV1}/tabtitles`,
     dashboard: `${APIV1}/dashboard`,
     menus: `${APIV1}/menus`,
     weather: `${APIV1}/weather`,
