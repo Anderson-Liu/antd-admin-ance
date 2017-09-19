@@ -52,7 +52,9 @@
     "redbox-react": "^1.2.10",
     "roadhog": "^1.2.2"
   },
-  "pre-commit": ["lint"],
+  "pre-commit": [
+    "lint"
+  ],
   "scripts": {
     "dev": "cross-env BROWSER=none HOST=0.0.0.0 roadhog server",
     "lint": "eslint --fix --ext .js src",

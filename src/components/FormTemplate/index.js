@@ -9,18 +9,11 @@ import Modal from './Modal'
 const FormTemplate = ({ filterProps, selectedRowKeys, listProps, modalVisible, modalProps, handleDeleteItems }) => {
   return (
     <Card>
-      <Filter {...filterProps} />
-      {
-        selectedRowKeys.length > 0 &&
-        <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-          <Col>
-            {`Selected ${selectedRowKeys.length} items `}
-            <Popconfirm title={'Are you sure delete these items?'} placement="left" onConfirm={handleDeleteItems}>
-              <Button type="primary" size="large" style={{ marginLeft: 8 }}>Remove</Button>
-            </Popconfirm>
-          </Col>
-        </Row>
-      }
+      <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
+        <Col>
+          <Popconfirm title={'Are you sure delete these items?'} placement="left" onConfirm={handleDeleteItems} />
+        </Col>
+      </Row>
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
     </Card>
