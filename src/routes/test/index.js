@@ -150,7 +150,19 @@ const Test = ({ location, dispatch, desctab, loading }) => {
     handleDeleteItems,
   }
 
-  return <div><EditableTable {...titleData} /> <FormTemplate {...allProps} /></div>
+  const handleChange = (data) => {
+    dispatch({
+      type: 'desctab/updateTitle',
+      payload: data,
+    })
+  }
+
+  const tableProps = {
+    titleData,
+    handleChange,
+  }
+
+  return <div><EditableTable {...tableProps} /> <FormTemplate {...allProps} /></div>
 }
 
 Test.propTypes = {

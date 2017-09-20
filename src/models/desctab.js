@@ -2,6 +2,7 @@
 import modelExtend from 'dva-model-extend'
 import { config } from 'utils'
 import { create, remove, update } from 'services/desctab'
+import { update as updateTitle } from 'services/tabtitle'
 import * as desctabsService from 'services/desctabs'
 import * as titleService from 'services/tabtitles'
 import { pageModel } from './common'
@@ -37,7 +38,7 @@ export default modelExtend(pageModel, {
             type: 'query',
             payload,
           })
-          dispatch({ type: 'queryTitle' })
+          // dispatch({ type: 'queryTitle' })
         }
       })
     },
@@ -48,6 +49,12 @@ export default modelExtend(pageModel, {
     * query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            titleData: data.titleData[0],
+          },
+        })
         yield put({
           type: 'querySuccess',
           payload: {
@@ -115,6 +122,7 @@ export default modelExtend(pageModel, {
       if (success) {
         const data = result.data[0]
         const titleData = {
+          id: data.id,
           title: data.title,
           subtitle: data.subtitle,
           isPublish: data.isPublish,
@@ -125,6 +133,22 @@ export default modelExtend(pageModel, {
             titleData,
           },
         })
+      }
+    },
+
+    * updateTitle ({
+      payload,
+    }, { call, put }) {
+      const data = payload.data[0]
+      const newTitle = {
+        id: payload.id,
+        title: data.title.value,
+        subtitle: data.subtitle.value,
+      }
+      const result = yield call(updateTitle, newTitle)
+      const { success } = result
+      if (success) {
+        yield put({ type: 'queryTitle' })
       }
     },
 

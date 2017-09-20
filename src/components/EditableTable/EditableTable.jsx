@@ -56,7 +56,7 @@ class EditableCell extends React.Component {
 class EditableTable extends React.Component {
   constructor (props) {
     super(props)
-    const { title, subtitle } = props
+    const { id, title, subtitle } = props.titleData
     this.columns = [{
       title: 'title',
       dataIndex: 'title',
@@ -92,6 +92,7 @@ class EditableTable extends React.Component {
       },
     }]
     this.state = {
+      id,
       data: [{
         key: '0',
         title: {
@@ -121,6 +122,7 @@ class EditableTable extends React.Component {
     const { data } = this.state
     data[index][key].value = value
     this.setState({ data })
+    this.props.handleChange(this.state)
   }
   edit (index) {
     const { data } = this.state
@@ -166,4 +168,6 @@ EditableCell.propTypes = {
   editable: PropTypes.bool,
   onChange: PropTypes.func,
 }
+
+
 export default EditableTable
