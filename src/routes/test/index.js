@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import { FormTemplate, EditableTable } from 'components'
 
 const Test = ({ location, dispatch, desctab, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, previewVisible, previewImage } = desctab
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, previewVisible, previewImage, titleData } = desctab
   const { pageSize } = pagination
   location.query = queryString.parse(location.search)
   // noinspection JSAnnotator
@@ -150,7 +150,7 @@ const Test = ({ location, dispatch, desctab, loading }) => {
     handleDeleteItems,
   }
 
-  return <div><EditableTable /> <FormTemplate {...allProps} /></div>
+  return <div><EditableTable {...titleData} /> <FormTemplate {...allProps} /></div>
 }
 
 Test.propTypes = {

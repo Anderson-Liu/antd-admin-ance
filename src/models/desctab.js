@@ -3,6 +3,7 @@ import modelExtend from 'dva-model-extend'
 import { config } from 'utils'
 import { create, remove, update } from 'services/desctab'
 import * as desctabsService from 'services/desctabs'
+import * as titleService from 'services/tabtitles'
 import { pageModel } from './common'
 
 const { query } = desctabsService
@@ -19,6 +20,12 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     selectedRowKeys: [],
     isMotion: window.localStorage.getItem(`${prefix}desctabIsMotion`) === 'true',
+    titleData: {
+      title: 'test title',
+      subtitle: 'test subtitle',
+      isPublish: false,
+      fileList: [],
+    },
   },
 
   subscriptions: {
@@ -30,6 +37,7 @@ export default modelExtend(pageModel, {
             type: 'query',
             payload,
           })
+          dispatch({ type: 'queryTitle' })
         }
       })
     },
@@ -97,6 +105,26 @@ export default modelExtend(pageModel, {
         yield put({ type: 'query' })
       } else {
         throw data
+      }
+    },
+    * queryTitle ({
+      payload = {},
+    }, { call, put }) {
+      const result = yield call(titleService.query, payload)
+      const { success } = result
+      if (success) {
+        const data = result.data[0]
+        const titleData = {
+          title: data.title,
+          subtitle: data.subtitle,
+          isPublish: data.isPublish,
+        }
+        yield put({
+          type: 'updateState',
+          payload: {
+            titleData,
+          },
+        })
       }
     },
 

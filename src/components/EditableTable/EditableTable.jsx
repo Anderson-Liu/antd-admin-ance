@@ -56,6 +56,7 @@ class EditableCell extends React.Component {
 class EditableTable extends React.Component {
   constructor (props) {
     super(props)
+    const { title, subtitle } = props
     this.columns = [{
       title: 'title',
       dataIndex: 'title',
@@ -95,11 +96,11 @@ class EditableTable extends React.Component {
         key: '0',
         title: {
           editable: false,
-          value: 'Edward King 0',
+          value: title,
         },
         subtitle: {
           editable: false,
-          value: '32',
+          value: subtitle,
         },
       }],
     }
