@@ -161,6 +161,7 @@ const Test = ({ location, dispatch, desctab, loading }) => {
   }
 
   const onChange = (data) => {
+    console.log('onChange', data)
     dispatch({
       type: 'desctab/updateTitle',
       payload: data,

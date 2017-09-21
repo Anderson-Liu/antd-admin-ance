@@ -24,6 +24,7 @@ let desctabsListData = Mock.mock({
   'titleData|1-1': [
     {
       key: '@id',
+      id: '@id',
       title: {
         editable: false,
         value: '@title',
@@ -31,7 +32,7 @@ let desctabsListData = Mock.mock({
       subtitle: {
         editable: false,
         value: '@title',
-      }
+      },
     },
   ],
 })
@@ -125,8 +126,8 @@ module.exports = {
     const editItem = req.body
     let isExist = false
 
-    // database = database.map((item) => {
-    titleDB = titleDB.map((item) => {
+    database = database.map((item) => {
+    // titleDB = titleDB.map((item) => {
       if (item.id === id) {
         isExist = true
         // Merging objects with same properties

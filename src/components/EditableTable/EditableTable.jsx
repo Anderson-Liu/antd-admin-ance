@@ -196,7 +196,7 @@ class EditableTable extends React.Component {
   handleChange (key, index, value) {
     const data = this.props.titleData
     data[index][key].value = value
-    this.props.onChange({ data })
+    this.props.onChange( data[0] )
     // this.setState({ data })
   }
   edit (index) {
@@ -207,7 +207,7 @@ class EditableTable extends React.Component {
       }
     })
     // this.setState({ data })
-    this.props.onChange({ data })
+    this.props.onChange( data[0] )
   }
   editDone (index, type) {
     const data = this.props.titleData
@@ -233,8 +233,9 @@ class EditableTable extends React.Component {
     // })
   }
   shouldComponentUpdate (nextProps, nextState) {
-    console.log(nextProps)
-    console.log(nextState)
+    const { title, subtitle } = this.props.titleData[0]
+    const { newTitle, newSubtitle } = nextProps.titleData[0]
+    return title !== newTitle || subtitle !== newSubtitle
   }
   render () {
     const dataSource = this.props.titleData.map((item) => {

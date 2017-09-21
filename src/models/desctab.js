@@ -123,9 +123,10 @@ export default modelExtend(pageModel, {
     * updateTitle ({
       payload,
     }, { call, put }) {
-      const newTitle = payload[0]
+      const newTitle = payload
       // const result = yield call(updateTitle, newTitle)
-      const result = yield call(update, newTitle)
+      console.log('newTitle', payload)
+      const result = yield call(updateTitle, newTitle)
       const { success } = result
       if (success) {
         yield put({ type: 'query' })
