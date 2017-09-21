@@ -21,19 +21,23 @@ let desctabsListData = Mock.mock({
       }],
     },
   ],
-  'titleData|4-8': [
+  'titleData|1-1': [
     {
-      id: '@id',
-      title: '@title',
-      subtitle: '@title',
-      namespace: 'tabtitle',
-      isPublish: '@boolean',
-      createTime: '@datetime',
+      key: '@id',
+      title: {
+        editable: false,
+        value: '@title',
+      },
+      subtitle: {
+        editable: false,
+        value: '@title',
+      }
     },
   ],
 })
 
 let database = desctabsListData.data
+let titleDB = desctabsListData.titleData
 
 const queryArray = (array, key, keyAlias = 'key') => {
   if (!(array instanceof Array)) {
@@ -62,6 +66,7 @@ const NOTFOUND = {
 module.exports = {
 
   [`GET ${apiPrefix}/desctabs`] (req, res) {
+    console.log('receive query desctabs request ')
     const { query } = req
     let { pageSize, page, ...other } = query
     pageSize = pageSize || 10
@@ -120,7 +125,8 @@ module.exports = {
     const editItem = req.body
     let isExist = false
 
-    database = database.map((item) => {
+    // database = database.map((item) => {
+    titleDB = titleDB.map((item) => {
       if (item.id === id) {
         isExist = true
         // Merging objects with same properties
@@ -133,6 +139,30 @@ module.exports = {
     if (isExist) {
       res.status(201).end()
     } else {
+      res.status(404).json(NOTFOUND)
+    }
+  },
+
+  [`PATCH ${apiPrefix}/tabtitle/:id`] (req, res) {
+    console.log('recivie patch')
+    const { id } = req.params
+    const editItem = req.body
+    let isExist = false
+
+    titleDB = titleDB.map((item) => {
+      if (item.id === id) {
+        isExist = true
+        // Merging objects with same properties
+        // The properties are overwritten by other objects that have the same properties later in the parameters order.
+        return Object.assign({}, item, editItem)
+      }
+      return item
+    })
+
+    if (isExist) {
+      res.status(201).end()
+    } else {
+      console.log('debug not found')
       res.status(404).json(NOTFOUND)
     }
   },

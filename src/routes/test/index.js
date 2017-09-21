@@ -150,7 +150,7 @@ const Test = ({ location, dispatch, desctab, loading }) => {
     handleDeleteItems,
   }
 
-  const handleChange = (data) => {
+  const onChange = (data) => {
     dispatch({
       type: 'desctab/updateTitle',
       payload: data,
@@ -159,7 +159,7 @@ const Test = ({ location, dispatch, desctab, loading }) => {
 
   const tableProps = {
     titleData,
-    handleChange,
+    onChange,
   }
 
   return <div><EditableTable {...tableProps} /> <FormTemplate {...allProps} /></div>

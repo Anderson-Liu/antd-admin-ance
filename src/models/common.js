@@ -3,6 +3,11 @@ import modelExtend from 'dva-model-extend'
 const model = {
   reducers: {
     updateState (state, { payload }) {
+      const test = {
+        ...state,
+        ...payload,
+      }
+      console.log(test)
       return {
         ...state,
         ...payload,

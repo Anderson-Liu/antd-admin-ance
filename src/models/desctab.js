@@ -21,12 +21,17 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     selectedRowKeys: [],
     isMotion: window.localStorage.getItem(`${prefix}desctabIsMotion`) === 'true',
-    titleData: {
-      title: 'test title',
-      subtitle: 'test subtitle',
-      isPublish: false,
-      fileList: [],
-    },
+    titleData: [{
+      key: '0',
+      title: {
+        editable: false,
+        value: 'hello',
+      },
+      subtitle: {
+        editable: false,
+        value: 'world',
+      },
+    }],
   },
 
   subscriptions: {
@@ -52,7 +57,7 @@ export default modelExtend(pageModel, {
         yield put({
           type: 'updateState',
           payload: {
-            titleData: data.titleData[0],
+            titleData: data.titleData,
           },
         })
         yield put({
@@ -114,41 +119,16 @@ export default modelExtend(pageModel, {
         throw data
       }
     },
-    * queryTitle ({
-      payload = {},
-    }, { call, put }) {
-      const result = yield call(titleService.query, payload)
-      const { success } = result
-      if (success) {
-        const data = result.data[0]
-        const titleData = {
-          id: data.id,
-          title: data.title,
-          subtitle: data.subtitle,
-          isPublish: data.isPublish,
-        }
-        yield put({
-          type: 'updateState',
-          payload: {
-            titleData,
-          },
-        })
-      }
-    },
 
     * updateTitle ({
       payload,
     }, { call, put }) {
-      const data = payload.data[0]
-      const newTitle = {
-        id: payload.id,
-        title: data.title.value,
-        subtitle: data.subtitle.value,
-      }
-      const result = yield call(updateTitle, newTitle)
+      const newTitle = payload[0]
+      // const result = yield call(updateTitle, newTitle)
+      const result = yield call(update, newTitle)
       const { success } = result
       if (success) {
-        yield put({ type: 'queryTitle' })
+        yield put({ type: 'query' })
       }
     },
 
