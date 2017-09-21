@@ -122,48 +122,44 @@ module.exports = {
   },
 
   [`PATCH ${apiPrefix}/desctab/:id`] (req, res) {
+    console.log('desctab-patch')
     const { id } = req.params
     const editItem = req.body
     let isExist = false
-
-    database = database.map((item) => {
-    // titleDB = titleDB.map((item) => {
-      if (item.id === id) {
-        isExist = true
-        // Merging objects with same properties
-        // The properties are overwritten by other objects that have the same properties later in the parameters order.
-        return Object.assign({}, item, editItem)
-      }
-      return item
-    })
-
-    if (isExist) {
-      res.status(201).end()
+    console.log('editItem', editItem)
+    if (editItem.fileList) {
+      database = database.map((item) => {
+        // titleDB = titleDB.map((item) => {
+        if (item.id === id) {
+          isExist = true
+          // Merging objects with same properties
+          // The properties are overwritten by other objects that have the same properties later in the parameters order.
+          return Object.assign({}, item, editItem)
+        }
+        return item
+      })
     } else {
-      res.status(404).json(NOTFOUND)
+      // database = database.map((item) => {
+      desctabsListData.titleData = desctabsListData.titleData.map((item) => {
+        console.log('url id', id)
+        console.log('item id', item.id)
+        if (item.id === id) {
+          console.log('isExist', 'true')
+          isExist = true
+          console.log('object after assign', Object.assign({}, item, editItem))
+          // Merging objects with same properties
+          // The properties are overwritten by other objects that have the same properties later in the parameters order.
+          return Object.assign({}, item, editItem)
+        }
+        return item
+      })
+      console.log('titleDB', titleDB)
+      console.log('desctabsListData.titleData', desctabsListData.titleData)
     }
-  },
-
-  [`PATCH ${apiPrefix}/tabtitle/:id`] (req, res) {
-    console.log('recivie patch')
-    const { id } = req.params
-    const editItem = req.body
-    let isExist = false
-
-    titleDB = titleDB.map((item) => {
-      if (item.id === id) {
-        isExist = true
-        // Merging objects with same properties
-        // The properties are overwritten by other objects that have the same properties later in the parameters order.
-        return Object.assign({}, item, editItem)
-      }
-      return item
-    })
 
     if (isExist) {
       res.status(201).end()
     } else {
-      console.log('debug not found')
       res.status(404).json(NOTFOUND)
     }
   },
