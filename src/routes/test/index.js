@@ -5,6 +5,16 @@ import queryString from 'query-string'
 import PropTypes from 'prop-types'
 import { FormTemplate, EditableTable } from 'components'
 
+/**
+ *
+ * @param location 来自react-route,https://github.com/ReactTraining/react-router/blob/v3/docs/API.md#injected-props
+ * @param dispatch 来自react-redux的connect默认引入的prop，https://github.com/reactjs/react-redux/blob/master/docs/api.md#inject-just-dispatch-and-dont-listen-to-store
+ * @param desctab  来自执行connect时带入的参数
+ * @param loading 来自执行connect时带入的参数
+ * @returns {XML}
+ * @constructor
+ */
+// connect带来dispatch,desctab,loading,详见《深入浅出React和Redux》3.2.5
 const Test = ({ location, dispatch, desctab, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, previewVisible, previewImage, titleData } = desctab
   const { pageSize } = pagination
@@ -172,4 +182,15 @@ Test.propTypes = {
   loading: PropTypes.object,
 }
 
+/**
+ * 深入浅出React和Redux》5.1.3文末讲解mapDispatchToProps=(dispatch, ownProps)=>{}中,ownProps是指父组件传递过来的props
+ *
+ * [mapStateToProps(state, [ownProps]): stateProps] (Function): If this argument is specified, the new component will subscribe
+ * to Redux store updates. This means that any time the store is updated, mapStateToProps will be called. The results of
+ * mapStateToProps must be a plain object, which will be merged into the component’s props. If you don't want to subscribe to
+ * store updates, pass null or undefined in place of mapStateToProps.
+ *
+ * It does not modify the component class passed to it; instead, it returns a new, connected component class for you to use.
+ */
 export default connect(({ desctab, loading }) => ({ desctab, loading }))(Test)
+
