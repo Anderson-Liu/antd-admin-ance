@@ -2,13 +2,11 @@ import React from 'react'
 import { Table, Input, Popconfirm, Card } from 'antd'
 import PropTypes from 'prop-types'
 
-let tmpData;
 class EditableCell extends React.Component {
   state = {
     value: this.props.value,
     editable: this.props.editable || false,
   }
-
   componentWillReceiveProps (nextProps) {
     if (nextProps.editable !== this.state.editable) {
       this.setState({ editable: nextProps.editable })
@@ -16,36 +14,23 @@ class EditableCell extends React.Component {
         this.cacheValue = this.state.value
       }
     }
-    console.log('Editable Cell call componentWillReceiveProps nextProps: ', nextProps)
-    console.log('Editable Cell call componentWillReceiveProps this.state: ', this.state)
-    console.log('Editable Cell call componentWillReceiveProps this.cacheValue: ', this.cacheValue)
     if (nextProps.status && nextProps.status !== this.props.status) {
       if (nextProps.status === 'save') {
-        console.log('Editable Cell call componentWillReceiveProps --save')
-        this.props.onChange(this.state.value, nextProps.status)
+        this.props.onChange(this.state.value)
       } else if (nextProps.status === 'cancel') {
-        console.log('Editable Cell call componentWillReceiveProps --cancel')
         this.setState({ value: this.cacheValue })
-        this.props.onChange(this.cacheValue, nextProps.status)
+        this.props.onChange(this.cacheValue)
       }
     }
   }
-
   shouldComponentUpdate (nextProps, nextState) {
     return nextProps.editable !== this.state.editable ||
       nextState.value !== this.state.value
   }
-
   handleChange (e) {
     const value = e.target.value
-    console.log('Editable Cell call onChange: ', value)
     this.setState({ value })
   }
-
-  componentDidUpdate(prevProps, prevState) {
-    tmpData = this.state
-  }
-
   render () {
     const { value, editable } = this.state
     return (
@@ -69,52 +54,56 @@ class EditableCell extends React.Component {
 }
 
 class EditableTable extends React.Component {
-  shouldComponentUpdate (nextProps, nextState) {
-    console.log('rerender')
-    const { title, subtitle } = this.props.titleData[0]
-    const { newTitle, newSubtitle } = nextProps.titleData[0]
-    console.log('rerender', title !== newTitle || subtitle !== newSubtitle)
-    return title !== newTitle || subtitle !== newSubtitle
+  constructor (props) {
+    super(props)
+    this.columns = [{
+      title: 'title',
+      dataIndex: 'title',
+      width: '25%',
+      render: (text, record, index) => this.renderColumns(this.state.data, index, 'title', text),
+    }, {
+      title: 'subtitle',
+      dataIndex: 'subtitle',
+      width: '15%',
+      render: (text, record, index) => this.renderColumns(this.state.data, index, 'subtitle', text),
+    }, {
+      title: 'operation',
+      dataIndex: 'operation',
+      render: (text, record, index) => {
+        const { editable } = this.state.data[index].title
+        return (
+          <div className="editable-row-operations">
+            {
+              editable ?
+                <span>
+                  <a onClick={() => this.editDone(index, 'save')}>Save</a>
+                  <Popconfirm title="Sure to cancel?" onConfirm={() => this.editDone(index, 'cancel')}>
+                    <a>Cancel</a>
+                  </Popconfirm>
+                </span>
+                :
+                <span>
+                  <a onClick={() => this.edit(index)}>Edit</a>
+                </span>
+            }
+          </div>
+        )
+      },
+    }]
+    this.state = {
+      data: [{
+        key: '0',
+        title: {
+          editable: false,
+          value: 'Edward King 0',
+        },
+        subtitle: {
+          editable: false,
+          value: '32',
+        },
+      }],
+    }
   }
-
-  columns = [{
-    title: 'title',
-    dataIndex: 'title',
-    width: '25%',
-    render: (text, record, index) => this.renderColumns(this.props.titleData, index, 'title', text),
-  }, {
-    title: 'subtitle',
-    dataIndex: 'subtitle',
-    width: '15%',
-    render: (text, record, index) => this.renderColumns(this.props.titleData, index, 'subtitle', text),
-  }, {
-    title: 'operation',
-    dataIndex: 'operation',
-    render: (text, record, index) => {
-      const { editable } = this.props.titleData[index].title
-      console.log('operation call render - titleData', this.props.titleData)
-      console.log('operation call render - index', index)
-      console.log('operation call render - editable', editable)
-      return (
-        <div className="editable-row-operations">
-          {
-            editable ?
-              <span>
-                <a onClick={() => this.editDone(index, 'save')}>Save</a>
-                <Popconfirm title="Sure to cancel?" onConfirm={() => this.editDone(index, 'cancel')}>
-                  <a>Cancel</a>
-                </Popconfirm>
-              </span>
-              :
-              <span>
-                <a onClick={() => this.edit(index)}>Edit</a>
-              </span>
-          }
-        </div>
-      )
-    },
-  }]
-
   renderColumns (data, index, key, text) {
     const { editable, status } = data[index][key]
     if (typeof editable === 'undefined') {
@@ -123,82 +112,65 @@ class EditableTable extends React.Component {
     return (<EditableCell
       editable={editable}
       value={text}
-      onChange={(value, newStatus) => this.handleChange(key, index, value, newStatus)}
+      onChange={value => this.handleChange(key, index, value)}
       status={status}
     />)
   }
-  handleChange (key, index, value, newStatus) {
-    this.props.titleData[index][key].value = value
-    const data = this.props.titleData
-    if (newStatus === 'save') {
-      // todo: finish it
-      Object.keys(this.props.titleData[index]).forEach((item) => {
-        if (data[index][item] && typeof data[index][item].editable !== 'undefined') {
-          data[index][item].status = undefined
-        }
-      })
-      this.props.onChange(this.props.titleData[0])
-    } else {
-      console.log('EditableTable call handleChange with value:', value)
-      console.log('EditableTable call handleChange with data:', this.props.titleData)
-      this.props.onChange(this.props.titleData[0])
+  handleChange (key, index, value) {
+    const { data } = this.state
+    data[index][key].value = value
+    this.setState({ data })
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    console.log(prevProps)
+    console.log(prevState)
+    if (prevState.data[0].title.status && prevState.data[0].title.status === 'save') {
+      this.props.onChange(this.state.data[0])
     }
-    // this.setState({ data })
   }
   edit (index) {
-    const data = this.props.titleData
-    Object.keys(this.props.titleData[index]).forEach((item) => {
+    const { data } = this.state
+    Object.keys(data[index]).forEach((item) => {
       if (data[index][item] && typeof data[index][item].editable !== 'undefined') {
         data[index][item].editable = true
       }
     })
-    // this.setState({ data })
-    this.props.onChange(this.props.titleData[0])
+    this.setState({ data })
   }
   editDone (index, type) {
-    let data = this.props.titleData
-    console.log('editDone-Data', this.props.titleData)
-    Object.keys(this.props.titleData[index]).forEach((item) => {
-      console.log('data[index][item]', data[index][item])
+    const { data } = this.state
+    Object.keys(data[index]).forEach((item) => {
       if (data[index][item] && typeof data[index][item].editable !== 'undefined') {
         data[index][item].editable = false
         data[index][item].status = type
       }
     })
-    console.log('editDone-Data-2', this.props.titleData)
-    this.props.onChange(this.props.titleData[0])
-    // data = this.props.titleData
-    // Object.keys(this.props.titleData[index]).forEach((item) => {
-    //   if (data[index][item] && typeof data[index][item].editable !== 'undefined') {
-    //     data[index][item].status = undefined
-    //   }
-    // })
-    // this.props.onChange(this.props.titleData[0])
+    this.setState({ data }, () => {
+      Object.keys(data[index]).forEach((item) => {
+        if (data[index][item] && typeof data[index][item].editable !== 'undefined') {
+          delete data[index][item].status
+        }
+      })
+    })
   }
-
   render () {
-    const dataSource = this.props.titleData.map((item) => {
+    const { data } = this.state
+    const dataSource = data.map((item) => {
       const obj = {}
       Object.keys(item).forEach((key) => {
         obj[key] = key === 'key' ? item[key] : item[key].value
       })
       return obj
     })
-    return <Card><Table bordered dataSource={dataSource} columns={this.columns} pagination={false} /></Card>
+    const columns = this.columns
+    return <Card><Table bordered dataSource={dataSource} columns={columns} pagination={false} /></Card>
   }
 }
-
 EditableCell.propTypes = {
   value: PropTypes.string,
   status: PropTypes.string,
   editable: PropTypes.bool,
   onChange: PropTypes.func,
 }
-
-EditableTable.propTypes = {
-  titleData: PropTypes.array,
-  onChange: PropTypes.func,
-}
-
-
 export default EditableTable
