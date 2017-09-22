@@ -4,7 +4,8 @@ const config = require('../utils/config')
 
 const { apiPrefix } = config
 
-let desctabsListData = Mock.mock({
+let desctabsListData;
+desctabsListData = Mock.mock({
   'data|4-8': [
     {
       id: '@id',
@@ -28,14 +29,16 @@ let desctabsListData = Mock.mock({
       title: {
         editable: false,
         value: '@title',
+        status: undefined,
       },
       subtitle: {
         editable: false,
         value: '@title',
+        status: undefined,
       },
     },
   ],
-})
+});
 
 let database = desctabsListData.data
 let titleDB = desctabsListData.titleData
