@@ -28,34 +28,58 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const columns = [
     {
-      title: 'Image',
+      title: '序号',
+      dataIndex: 'num',
+      key: 'num',
+      width: 84,
+      render: text => (<span>{text
+        ? 0
+        : 1}</span>),
+    },
+    {
+      title: '测评项目',
+      dataIndex: 'title',
+      key: 'title',
+      width: 140,
+      render: (text, record) => <Link to={`ppt/${record.id}`}>{text}</Link>,
+    }, {
+      title: '测评项目详情',
+      dataIndex: 'content',
+      key: 'content',
+    }, {
+      title: '扣分',
+      dataIndex: 'isPublish',
+      key: 'isPublish',
+      width: 84,
+      render: text => (<span>{text
+        ? 0.1
+        : 0.2}</span>),
+    }, {
+      title: '扣分原因',
+      dataIndex: 'title',
+      key: 'reason',
+      width: 140,
+      render: text => <div>{text}</div>,
+    }, {
+      title: '地点',
+      dataIndex: 'title',
+      key: 'location',
+      width: 90,
+    }, {
+      title: '提交者',
+      dataIndex: 'title',
+      key: 'author',
+      width: 90,
+    }, {
+      title: '截图',
       dataIndex: 'fileList',
       key: 'fileList',
       width: 64,
       className: styles.avatar,
       render: text => <img alt={'avatar'} width={24} src={text[0].url} />,
-    }, {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
-      render: (text, record) => <Link to={`ppt/${record.id}`}>{text}</Link>,
-    }, {
-      title: 'Content',
-      dataIndex: 'content',
-      key: 'content',
-    }, {
-      title: 'isPublish',
-      dataIndex: 'isPublish',
-      key: 'isPublish',
-      render: text => (<span>{text
-        ? '是'
-        : '否'}</span>),
-    }, {
-      title: 'CreateTime',
-      dataIndex: 'createTime',
-      key: 'createTime',
-    }, {
-      title: 'Operation',
+    },
+    {
+      title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
@@ -81,6 +105,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         simple
         rowKey={record => record.id}
         getBodyWrapper={getBodyWrapper}
+        scroll={{ x: true }}
       />
     </div>
   )

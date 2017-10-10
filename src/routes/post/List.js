@@ -5,35 +5,35 @@ import styles from './List.less'
 const List = ({ ...tableProps }) => {
   const columns = [
     {
-      title: 'Image',
+      title: '序号',
       dataIndex: 'image',
       className: styles.image,
       width: 64,
       render: text => <img alt="Feture" width={26} src={text} />,
     }, {
-      title: 'Title',
+      title: '测评项目',
       dataIndex: 'title',
+      width: 140,
     }, {
-      title: 'Author',
+      title: '测评项目详情',
       dataIndex: 'author',
+      width: 360,
     }, {
-      title: 'Categories',
+      title: '扣分',
       dataIndex: 'categories',
+      width: 60,
     }, {
-      title: 'Tags',
+      title: '扣分原因',
       dataIndex: 'tags',
+      width: 120,
     }, {
-      title: 'Visibility',
+      title: '地点描述',
       dataIndex: 'visibility',
+      width: 320,
     }, {
-      title: 'Comments',
-      dataIndex: 'comments',
-    }, {
-      title: 'Views',
+      title: '照片',
       dataIndex: 'views',
-    }, {
-      title: 'Date',
-      dataIndex: 'date',
+      width: 220,
     },
   ]
 
