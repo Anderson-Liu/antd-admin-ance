@@ -24,21 +24,11 @@ desctabsListData = Mock.mock({
   ],
   'titleData|1-1': [
     {
-      key: '@id',
-      id: '@id',
-      title: {
-        editable: false,
-        value: '@title',
-        status: undefined,
-      },
-      subtitle: {
-        editable: false,
-        value: '@title',
-        status: undefined,
-      },
+      title: '@title',
+      subtitle: '@title',
     },
   ],
-});
+})
 
 let database = desctabsListData.data
 let titleDB = desctabsListData.titleData
@@ -80,7 +70,7 @@ module.exports = {
 
     res.status(200).json({
       data: newData.slice((page - 1) * pageSize, page * pageSize),
-      titleData: desctabsListData.titleData,
+      titleData: titleDB,
       total: newData.length,
     })
   },
@@ -143,21 +133,8 @@ module.exports = {
       })
     } else {
       // database = database.map((item) => {
-      desctabsListData.titleData = desctabsListData.titleData.map((item) => {
-        console.log('url id', id)
-        console.log('item id', item.id)
-        if (item.id === id) {
-          console.log('isExist', 'true')
-          isExist = true
-          console.log('object after assign', Object.assign({}, item, editItem))
-          // Merging objects with same properties
-          // The properties are overwritten by other objects that have the same properties later in the parameters order.
-          return Object.assign({}, item, editItem)
-        }
-        return item
-      })
-      console.log('titleDB', titleDB)
-      console.log('desctabsListData.titleData', desctabsListData.titleData)
+      titleDB = Object.assign({}, titleDB, editItem)
+      isExist = true
     }
 
     if (isExist) {

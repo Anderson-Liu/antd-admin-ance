@@ -21,17 +21,8 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     selectedRowKeys: [],
     isMotion: window.localStorage.getItem(`${prefix}desctabIsMotion`) === 'true',
-    titleData: [{
-      key: '0',
-      title: {
-        editable: false,
-        value: 'hello',
-      },
-      subtitle: {
-        editable: false,
-        value: 'world',
-      },
-    }],
+    title: '',
+    subTitle: '',
   },
 
   subscriptions: {
@@ -57,7 +48,8 @@ export default modelExtend(pageModel, {
         yield put({
           type: 'updateState',
           payload: {
-            titleData: data.titleData,
+            title: data.title,
+            subTitle: data.subTitle,
           },
         })
         yield put({
@@ -104,7 +96,7 @@ export default modelExtend(pageModel, {
         throw data
       }
     },
-
+    // todo: 解决不用id的update问题，解决无法建立tabTitle的不用id的update server监听的问题
     * update ({ payload }, { select, call, put }) {
       // 拿到context中namespace为desctab的值，里面包含了state，进一步获取里面的currentItem来改
       const id = yield select(({ desctab }) => desctab.currentItem.id)

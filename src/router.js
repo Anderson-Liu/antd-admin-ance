@@ -73,7 +73,7 @@ const Routers = function ({ history, app }) {
       path: '/test',
       models: () => [import('./models/desctab')],
       component: () => import('./routes/test/'),
-    },
+    }
   ]
 
   return (

@@ -95,16 +95,19 @@ class EditableTable extends React.Component {
         key: '0',
         title: {
           editable: false,
-          value: 'Edward King 0',
+          // value: this.props.title,
+          value: 'anderson',
         },
         subtitle: {
           editable: false,
-          value: '32',
+          // value: this.props.subtitle,
+          value: 'liu',
         },
       }],
     }
   }
   renderColumns (data, index, key, text) {
+    console.log(`调用子组件${key}的render函数`)
     const { editable, status } = data[index][key]
     if (typeof editable === 'undefined') {
       return text
@@ -117,18 +120,12 @@ class EditableTable extends React.Component {
     />)
   }
   handleChange (key, index, value) {
+    console.log(`调用子组件${key}的handleChange传递数据到父组件`)
     const { data } = this.state
     data[index][key].value = value
     this.setState({ data })
   }
 
-  componentDidUpdate (prevProps, prevState) {
-    console.log(prevProps)
-    console.log(prevState)
-    if (prevState.data[0].title.status && prevState.data[0].title.status === 'save') {
-      this.props.onChange(this.state.data[0])
-    }
-  }
   edit (index) {
     const { data } = this.state
     Object.keys(data[index]).forEach((item) => {
@@ -147,14 +144,20 @@ class EditableTable extends React.Component {
       }
     })
     this.setState({ data }, () => {
+      console.log('调用之后setState之后的函数')
       Object.keys(data[index]).forEach((item) => {
         if (data[index][item] && typeof data[index][item].editable !== 'undefined') {
           delete data[index][item].status
         }
       })
+      this.props.onChange({
+        title: this.state.data[0].title.value,
+        subtitle: this.state.data[0].subtitle.value,
+      })
     })
   }
   render () {
+    console.log('调用父组件的render')
     const { data } = this.state
     const dataSource = data.map((item) => {
       const obj = {}
