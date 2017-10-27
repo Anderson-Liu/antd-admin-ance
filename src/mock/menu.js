@@ -1,7 +1,7 @@
-const { config } = require('./common')
+const { config } = require('./common');
 
-const { apiPrefix } = config
-let database = [
+const { apiPrefix } = config;
+const database = [
   {
     id: '1',
     icon: 'laptop',
@@ -172,11 +172,17 @@ let database = [
     name: 'test',
     route: '/test',
   },
-]
+  {
+    id: '11',
+    icon: 'user',
+    name: 'city_user',
+    route: '/city_user',
+  },
+];
 
 module.exports = {
 
-  [`GET ${apiPrefix}/menus`] (req, res) {
-    res.status(200).json(database)
+  [`GET ${apiPrefix}/menus`](req, res) {
+    res.status(200).json(database);
   },
-}
+};
