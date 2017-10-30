@@ -22,7 +22,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/user') {
+        if (location.pathname === '/city_user') {
           const payload = location.query || { current: 1, pageSize: 10 };
           dispatch({
             type: 'query',
