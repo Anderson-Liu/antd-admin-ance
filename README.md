@@ -1,4 +1,7 @@
 # Antd Admin
+## 基于[antd-admin](https://github.com/zuiidea/antd-admin)做的尝试。
+## 以下是原库描述
+
 
 [![React](https://img.shields.io/badge/react-^15.6.1-brightgreen.svg?style=flat-square)](https://github.com/facebook/react)
 [![Ant Design](https://img.shields.io/badge/ant--design-^2.11.2-yellowgreen.svg?style=flat-square)](https://github.com/ant-design/ant-design)
